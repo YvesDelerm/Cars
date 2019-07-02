@@ -63,3 +63,9 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 fastlane/readme.md
+/.idea
+/gradlew
+/gradlew.bat
+/device-2019-07-01-105002.png
+/device-2019-07-01-180851.png
+/gradle/wrapper
