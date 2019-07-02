@@ -1,6 +1,7 @@
 package fr.ydelerm.drivy.ui.list
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +11,11 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import fr.ydelerm.drivy.R
 import fr.ydelerm.drivy.model.Car
+import fr.ydelerm.drivy.ui.detail.DetailActivity
 
 class CarsAdapter(private val cars: List<Car>, private val context: Context) : RecyclerView.Adapter<CarsAdapter.CarViewHolder>() {
 
@@ -47,8 +50,16 @@ class CarsAdapter(private val cars: List<Car>, private val context: Context) : R
         holder.dailyPrice.text = context.getString(R.string.price_per_day_format, car.pricePerDay)
         holder.rating.rating = car.rating.average
         holder.ratingCount.text = car.rating.count.toString()
+        holder.carsLayout.setOnClickListener{_ -> onCarSelected(holder)}
     }
 
+    private fun onCarSelected(@NonNull holder:CarViewHolder) {
+        val car = cars[holder.adapterPosition]
+        val intent = Intent(context, DetailActivity::class.java)
+        intent.putExtra(DetailActivity.PARAM_CAR_DATA, Gson().toJson(car))
+        intent.flags=Intent.FLAG_ACTIVITY_NEW_TASK
+        context.startActivity(intent)
+    }
 
 
     override fun getItemCount(): Int {
