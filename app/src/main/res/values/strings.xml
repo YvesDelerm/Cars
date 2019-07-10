@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">Drivy</string>
     <string name="car_image">Photo de la voiture</string>
-    <string name="rating_image">Nombre d\'étoiles</string>
     <string name="car_name_format">%1$s %2$s</string>
     <string name="price_per_day_format">%1$d €/j</string>
     <string name="owner">Propriétaire</string>
+    <string name="error_unavailable_data">Aucune donnée disponible.</string>
+    <string name="refresh">Rafraîchir</string>
+    <string name="owner_image">Image du propriétaire</string>
 </resources>

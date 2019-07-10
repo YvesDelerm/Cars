@@ -1,26 +1,24 @@
 package fr.ydelerm.drivy.ui.list
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.annotation.NonNull
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import fr.ydelerm.drivy.R
 import fr.ydelerm.drivy.model.Car
-import fr.ydelerm.drivy.ui.detail.DetailActivity
 
-class CarsAdapter(private val cars: List<Car>, private val context: Context) : RecyclerView.Adapter<CarsAdapter.CarViewHolder>() {
+class CarsAdapter(private val cars: List<Car>, private val context: Context, private val clickListener: CarClickListener) : RecyclerView.Adapter<CarsAdapter.CarViewHolder>() {
 
     class CarViewHolder(@NonNull v: View) : RecyclerView.ViewHolder(v) {
-        internal var carsLayout: LinearLayout = v.findViewById(R.id.cars_layout)
+        internal var carsLayout: ConstraintLayout = v.findViewById(R.id.cars_layout)
         internal var carName: TextView = v.findViewById(R.id.car_name)
         internal var dailyPrice: TextView = v.findViewById(R.id.daily_price)
         internal var rating: RatingBar = v.findViewById(R.id.rating)
@@ -46,6 +44,9 @@ class CarsAdapter(private val cars: List<Car>, private val context: Context) : R
             .placeholder(R.drawable.ic_car_black_48dp)
             .error(R.drawable.ic_car_black_48dp)
             .into(holder.carImage)
+
+        ViewCompat.setTransitionName(holder.carImage, "image$position")
+
         holder.carName.text = context.getString(R.string.car_name_format, car.brand, car.model)
         holder.dailyPrice.text = context.getString(R.string.price_per_day_format, car.pricePerDay)
         holder.rating.rating = car.rating.average
@@ -55,10 +56,7 @@ class CarsAdapter(private val cars: List<Car>, private val context: Context) : R
 
     private fun onCarSelected(@NonNull holder:CarViewHolder) {
         val car = cars[holder.adapterPosition]
-        val intent = Intent(context, DetailActivity::class.java)
-        intent.putExtra(DetailActivity.PARAM_CAR_DATA, Gson().toJson(car))
-        intent.flags=Intent.FLAG_ACTIVITY_NEW_TASK
-        context.startActivity(intent)
+        clickListener.onCarClicked(holder.adapterPosition, car, holder.carImage)
     }
 
 

@@ -6,7 +6,7 @@ import fr.ydelerm.drivy.repositories.NetworkCarRepositoryImpl
 
 class CarsViewModel(application: Application) : AndroidViewModel(application) {
     fun refresh() {
-        repository.refreshCars();
+        repository.refreshCars()
     }
 
     private var repository = NetworkCarRepositoryImpl() //TODO injection dépendances
