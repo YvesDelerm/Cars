@@ -1,2 +1,2 @@
-# Drivy
-Drivy-like sample app
+# Car
+Car rent sample app
